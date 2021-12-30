@@ -1,2 +1,2 @@
 # Denmo
-A library for implementing payment authorization into Deno applications 
+A library for implementing authentication into Deno applications 
