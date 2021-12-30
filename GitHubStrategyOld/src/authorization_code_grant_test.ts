@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import {
   assertEquals,
   assertMatch,
