@@ -1,8 +1,10 @@
-import { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
+import type { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
 
 
 export class LinkedInStrategy {
-
+  constructor(client: LinkedInClient) {
+    super(client);
+  }
 
 // {clientId} = code;
 
@@ -10,10 +12,10 @@ export class LinkedInStrategy {
 
   // hardcode in createLink
   createLink() {
-    const state: number = Math.floor(Math.random() * 1000000000)
-    const encode: string = encodeURIComponent(this.redirect)
-    let SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
-    return SampleLink
+    const state: number = Math.floor(Math.random() * 1000000000);
+    const encode: string = encodeURIComponent(this.client.redirect);
+    let SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.scope}`;
+    return SampleLink;
   }
 
   // const newLink = createLink(clientId, redirect, scope)
@@ -45,11 +47,11 @@ export class LinkedInStrategy {
   // }
 
   // part 2
-  const findCode = async (stringPathName: String) => {
+    async findCode(stringPathName: String) {
     // const stringPathName: String = ctx.request.url;
 
-    const code: string = JSON.stringify(stringPathName.search)
-    const parsedCode: string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
+    const code: string = JSON.stringify(stringPathName.search);
+    const parsedCode: string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
     const tokens: string = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
     method: 'POST',
@@ -59,35 +61,35 @@ export class LinkedInStrategy {
     body: new URLSearchParams({
       'grant_type': "authorization_code", // hard code
       'code': parsedCode, // helper function
-      'redirect_uri': this.redirect, // linkedin uri
-      'client_id': this.clientId, // provided by linkedin
-      'client_secret': this.clientSecret //provided by linkedin
+      'redirect_uri': this.client.redirect, // linkedin uri
+      'client_id': this.client.clientId, // provided by linkedin
+      'client_secret': this.client.clientSecret //provided by linkedin
+      })
     })
-  })
-  .then((response: any) => {
-    return response.text()
-   })
-  .then((paramsString: any) => {
-    let params = new URLSearchParams(paramsString)
-      console.log(params);
-      let tokenKey = [];
-      for (const [key, value] of params.entries()){
-      tokenKey.push(key, value)
-      }
-
-      let obj: any = tokenKey[0]
-      let values = Object.values(obj)
-
-      const tokenArr: any = []
-      let i = 17;
-      while (values[i] !== '"') {
-          tokenArr.push(values[i])
-         i++
+    .then((response: any) => {
+      return response.text()
+     })
+    .then((paramsString: any) => {
+      let params = new URLSearchParams(paramsString);
+        console.log(params);
+        let tokenKey = [];
+        for (const [key, value] of params.entries()){
+        tokenKey.push(key, value)
         }
-      const bearerToken: string = tokenArr.join('')
-      return bearerToken;
-    })
-  }
+
+        let obj: any = tokenKey[0];
+        let values = Object.values(obj);
+
+        const tokenArr: any = []
+        let i = 17;
+        while (values[i] !== '"') {
+          tokenArr.push(values[i])
+          i++
+          }
+        const bearerToken: string = tokenArr.join('');
+        return bearerToken;
+      })
+  } 
 }
 
 // potentially part of LOAuthOne
