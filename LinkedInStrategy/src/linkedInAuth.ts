@@ -1,7 +1,7 @@
 import { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
 
 
-export default class LinkedInStrategy {
+export class LinkedInStrategy {
 
 
 // {clientId} = code;
@@ -10,9 +10,9 @@ export default class LinkedInStrategy {
 
   // hardcode in createLink
   async createLink = () => {
-    const state: Number = Math.floor(Math.random() * 1000000000)
-    const encode: String = encodeURIComponent(this.redirect)
-    let SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
+    const state: number = Math.floor(Math.random() * 1000000000)
+    const encode: string = encodeURIComponent(this.redirect)
+    let SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
     return SampleLink
   }
 
@@ -48,7 +48,7 @@ export default class LinkedInStrategy {
   const findCode = async (stringPathName: String) => {
     // const stringPathName: String = ctx.request.url;
 
-    const code: String = JSON.stringify(stringPathName.search)
+    const code: string = JSON.stringify(stringPathName.search)
     const parsedCode = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
 
     const tokens = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
