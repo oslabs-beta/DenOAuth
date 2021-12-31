@@ -1,7 +1,7 @@
 import { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
 
 
-export class LinkedInStrategy {
+export default class LinkedInStrategy {
 
 
 // {clientId} = code;
@@ -9,7 +9,7 @@ export class LinkedInStrategy {
   // const SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
 
   // hardcode in createLink
-  async createLink = () => {
+  const createLink = () => {
     const state: number = Math.floor(Math.random() * 1000000000)
     const encode: string = encodeURIComponent(this.redirect)
     let SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
