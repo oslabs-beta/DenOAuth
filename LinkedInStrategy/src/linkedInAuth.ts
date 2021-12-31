@@ -1,7 +1,7 @@
 import { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
 
 
-export default class LinkedInStrategy {
+export class LinkedInStrategy {
 
 
 // {clientId} = code;
