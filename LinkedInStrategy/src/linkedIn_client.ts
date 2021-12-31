@@ -1,4 +1,4 @@
-import LinkedInStrategy from "./linkedInAuth.ts";
+import { LinkedInStrategy } from "./linkedInAuth.ts";
 
 
 export interface LinkedInClientConfig {
