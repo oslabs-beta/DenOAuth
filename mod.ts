@@ -1,3 +1,3 @@
-import LinkedInClient from './LinkedInStrategy/src/linkedIn_client.ts'
+// import * from './LinkedInStrategy/src/linkedIn_client.ts'
 
-export default LinkedInClient;
+export { LinkedInClient, LinkedInClientConfig } from './LinkedInStrategy/src/linkedIn_client.ts';
