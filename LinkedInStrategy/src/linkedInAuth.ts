@@ -19,7 +19,7 @@ export class LinkedInStrategy {
   // const newLink = createLink(clientId, redirect, scope)
 
   //part 1
-  const LOauthOne = async (ctx:any, next:any) => {
+  // const LOauthOne = async (ctx:any, next:any) => {
   ///////////////////// session stuff /////////////////
   // let sessionId: Number = Math.floor(Math.random() * 1000000000);
   // await client.connect()
@@ -29,29 +29,29 @@ export class LinkedInStrategy {
   //     data: ctx.response.redirect(`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=8693ww7e9p6u3t&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fstore&state=foobar&scope=r_liteprofile`)
   // };
 
-    ctx.response.body = {
-      message: 'success',
-      data: ctx.response.redirect(createLink())    
-    };
-  }
+  //   ctx.response.body = {
+  //     message: 'success',
+  //     data: ctx.response.redirect(createLink())    
+  //   };
+  // }
 
-  const setBearerToken = async (bearToken: any) => {
-    const userResponse = await fetch("https://api.linkedin.com/v2/me", {
-      headers: {
-        Authorization: `Bearer ${bearToken}`,
-      },
-    });
-    const {localizedFirstName} = await userResponse.json()
-  }
+  // const setBearerToken = async (bearToken: any) => {
+  //   const userResponse = await fetch("https://api.linkedin.com/v2/me", {
+  //     headers: {
+  //       Authorization: `Bearer ${bearToken}`,
+  //     },
+  //   });
+  //   const {localizedFirstName} = await userResponse.json()
+  // }
 
   // part 2
   const findCode = async (stringPathName: String) => {
     // const stringPathName: String = ctx.request.url;
 
     const code: string = JSON.stringify(stringPathName.search)
-    const parsedCode = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
+    const parsedCode: string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
 
-    const tokens = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
+    const tokens: string = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
     method: 'POST',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -78,13 +78,13 @@ export class LinkedInStrategy {
       let obj: any = tokenKey[0]
       let values = Object.values(obj)
 
-      const tokenArr = []
+      const tokenArr: any = []
       let i = 17;
       while (values[i] !== '"') {
           tokenArr.push(values[i])
          i++
         }
-      const bearerToken = tokenArr.join('')
+      const bearerToken: string = tokenArr.join('')
       return bearerToken;
     })
   }

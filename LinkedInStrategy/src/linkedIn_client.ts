@@ -1,4 +1,5 @@
 import { LinkedInStrategy } from './linkedInAuth.ts';
+import { RequestOptions } from './types.ts';
 
 
 export interface LinkedInClientConfig {
