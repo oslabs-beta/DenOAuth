@@ -12,9 +12,9 @@ export class LinkedInStrategy {
 
   // hardcode in createLink
   createLink() {
-    const state: number = Math.floor(Math.random() * 1000000000);
-    const encode: string = encodeURIComponent(this.client.redirect);
-    let SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.scope}`;
+    const state:number = Math.floor(Math.random() * 1000000000);
+    const encode:string = encodeURIComponent(this.client.redirect);
+    let SampleLink:string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.scope}`;
     return SampleLink;
   }
 
@@ -47,13 +47,13 @@ export class LinkedInStrategy {
   // }
 
   // part 2
-    async findCode(stringPathName: String) {
+    async findCode(stringPathName:string) {
     // const stringPathName: String = ctx.request.url;
 
-    const code: string = JSON.stringify(stringPathName.search);
-    const parsedCode: string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
+    const code:string = JSON.stringify(stringPathName.search);
+    const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
-    const tokens: string = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
+    const tokens:string = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
     method: 'POST',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -77,16 +77,16 @@ export class LinkedInStrategy {
         tokenKey.push(key, value)
         }
 
-        let obj: any = tokenKey[0];
+        let obj:any = tokenKey[0];
         let values = Object.values(obj);
 
-        const tokenArr: any = []
+        const tokenArr:any = []
         let i = 17;
         while (values[i] !== '"') {
           tokenArr.push(values[i])
           i++
           }
-        const bearerToken: string = tokenArr.join('');
+        const bearerToken:string = tokenArr.join('');
         return bearerToken;
       })
   } 

@@ -4,13 +4,13 @@ import { RequestOptions } from './types.ts';
 
 export interface LinkedInClientConfig {
   /** The client ID provided by the authorization server. */
-  clientId: string;
+  clientId:string;
   /** The client secret provided by the authorization server, if using a confidential client. */
-  clientSecret: string;
+  clientSecret:string;
   /** The URI of the client's redirection endpoint (sometimes also called callback URI). */
-  redirect: string;
+  redirect:string;
   /** The URI of the authorization server's token endpoint. */
-  tokenUri: string;
+  tokenUri:string;
 
   defaults?: {
     /**
@@ -19,7 +19,7 @@ export interface LinkedInClientConfig {
      * For example used when exchanging authorization codes for access tokens.
      */
     /** The URI of the authorization server's authorization endpoint. */
-    authorizationEndpointUri: string;
+    authorizationEndpointUri:string;
 
     requestOptions?: Omit<RequestOptions, "method">;
     /** Default scopes to request unless otherwise specified. */
