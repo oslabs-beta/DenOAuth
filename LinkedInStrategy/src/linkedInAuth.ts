@@ -9,7 +9,7 @@ export default class LinkedInStrategy {
   // const SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
 
   // hardcode in createLink
-  async createLink: Function = () => {
+  async createLink = () => {
     const state: Number = Math.floor(Math.random() * 1000000000)
     const encode: String = encodeURIComponent(this.redirect)
     let SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
