@@ -1,28 +1,22 @@
+import { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts';
+
+
 export default class LinkedInStrategy {
 
 
-
+// {clientId} = code;
 
   // const SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
 
   // hardcode in createLink
-  async createLink: Function = (cliendId:String, redirect:any, scope:String) => {
+  async createLink: Function = () => {
     const state: Number = Math.floor(Math.random() * 1000000000)
-    const encode: String = encodeURIComponent(redirect)
-    let SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${cliendId}&redirect_uri=${encode}&state=${state}&scope=${scope}`
+    const encode: String = encodeURIComponent(this.redirect)
+    let SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`
     return SampleLink
   }
 
-  const newLink = createLink(clientId, redirect, scope)
-
-  const setBearerToken = async (bearToken: any) => {
-    const userResponse = await fetch("https://api.linkedin.com/v2/me", {
-      headers: {
-        Authorization: `Bearer ${bearToken}`,
-      },
-    });
-    const {localizedFirstName} = await userResponse.json()
-  }
+  // const newLink = createLink(clientId, redirect, scope)
 
   //part 1
   const LOauthOne = async (ctx:any, next:any) => {
@@ -37,14 +31,23 @@ export default class LinkedInStrategy {
 
     ctx.response.body = {
       message: 'success',
-      data: ctx.response.redirect(newLink)    
+      data: ctx.response.redirect(createLink())    
     };
   }
 
+  const setBearerToken = async (bearToken: any) => {
+    const userResponse = await fetch("https://api.linkedin.com/v2/me", {
+      headers: {
+        Authorization: `Bearer ${bearToken}`,
+      },
+    });
+    const {localizedFirstName} = await userResponse.json()
+  }
+
   // part 2
-  const findCode = async (ctx:any, next:any) => {
-    const stringPathName: String = ctx.request.url;
-  
+  const findCode = async (stringPathName: String) => {
+    // const stringPathName: String = ctx.request.url;
+
     const code: String = JSON.stringify(stringPathName.search)
     const parsedCode = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
 
@@ -56,14 +59,14 @@ export default class LinkedInStrategy {
     body: new URLSearchParams({
       'grant_type': "authorization_code", // hard code
       'code': parsedCode, // helper function
-      'redirect_uri': redirect, // linkedin uri
-      'client_id': clientId, // provided by linkedin
-      'client_secret': clientSecret //provided by linkedin
+      'redirect_uri': this.redirect, // linkedin uri
+      'client_id': this.clientId, // provided by linkedin
+      'client_secret': this.clientSecret //provided by linkedin
     })
   })
   .then((response: any) => {
     return response.text()
-  })
+   })
   .then((paramsString: any) => {
     let params = new URLSearchParams(paramsString)
       console.log(params);
@@ -82,12 +85,9 @@ export default class LinkedInStrategy {
          i++
         }
       const bearerToken = tokenArr.join('')
-
-      setBearerToken(bearerToken)
-  })
-   return await next();
+      return bearerToken;
+    })
   }
-
 }
 
 // potentially part of LOAuthOne
