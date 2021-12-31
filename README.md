@@ -1,2 +1,3 @@
-# Denmo
-A library for implementing 3rd party API authorization into Deno applications. 
+# DenOauth
+A library for implementing payment authentication into Deno applications 
+
