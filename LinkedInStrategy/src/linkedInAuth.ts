@@ -1,7 +1,7 @@
 import type { LinkedInClient, LinkedInClientConfig } from './linkedIn_client.ts';
 
 
-export class LinkedInStrategy {
+export class LinkedInStrategy extends LinkedInClient {
   constructor(
     // clientId: string,
     // clientSecret: string,
