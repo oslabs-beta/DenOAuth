@@ -38,7 +38,7 @@ import { LinkedInStrategy } from './linkedInAuth.ts';
  * LOAUTHOne(or equivalent), when redirecting the URI, should call createLink, and then the link returned is the redirect
  */
 
-export class LinkedInClient {
+export interface LinkedInClient {
     /** The client ID provided by the authorization server. */
     clientId:string;
     /** The client secret provided by the authorization server, if using a confidential client. */
