@@ -1,14 +1,15 @@
-import type { LinkedInClient } from './linkedIn_client.ts';
+import type { LinkedInClient, LinkedInClientConfig } from './linkedIn_client.ts';
 
 
-export class LinkedInStrategy extends LinkedInClient {
+export class LinkedInStrategy {
   constructor(
-    clientId: string,
-    clientSecret: string,
-    scope: string,
-    redirect: string
+    // clientId: string,
+    // clientSecret: string,
+    // scope: string,
+    // redirect: string
+    client: LinkedInClient
   ) {
-    super();
+    super(client);
   }
 
 // {clientId} = code;
@@ -18,8 +19,8 @@ export class LinkedInStrategy extends LinkedInClient {
   // hardcode in createLink
   createLink() {
     const state:number = Math.floor(Math.random() * 1000000000);
-    const encode:string = encodeURIComponent(this.redirect);
-    let SampleLink:string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`;
+    const encode:string = encodeURIComponent(this.client.config.redirect);
+    let SampleLink:string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.config.scope}`;
     return SampleLink;
   }
 
@@ -66,9 +67,9 @@ export class LinkedInStrategy extends LinkedInClient {
     body: new URLSearchParams({
       'grant_type': "authorization_code", // hard code
       'code': parsedCode, // helper function
-      'redirect_uri': this.redirect, // linkedin uri
-      'client_id': this.clientId, // provided by linkedin
-      'client_secret': this.clientSecret //provided by linkedin
+      'redirect_uri': this.client.config.redirect, // linkedin uri
+      'client_id': this.client.config.clientId, // provided by linkedin
+      'client_secret': this.client.config.clientSecret //provided by linkedin
       })
     })
     .then((response: any) => {
