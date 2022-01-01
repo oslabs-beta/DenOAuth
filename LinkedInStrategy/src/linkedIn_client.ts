@@ -39,9 +39,6 @@ export interface LinkedInClientConfig {
  */
 
 export class LinkedInClient {
-  
-    // Our implementation currently only works with scope set to 'r_liteprofile' 
-    scope: string | string[];
   // implements all the methods required to complete OAuth process
   public code = new LinkedInStrategy(this);
 
