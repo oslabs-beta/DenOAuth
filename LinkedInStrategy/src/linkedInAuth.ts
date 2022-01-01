@@ -1,4 +1,4 @@
-import type { LinkedInClient, LinkedInClientConfig } from './linkedIn_client.ts';
+import { LinkedInClient, LinkedInClientConfig } from './linkedIn_client.ts';
 
 
 export class LinkedInStrategy extends LinkedInClient {
