@@ -15,21 +15,21 @@ export interface LinkedInClientConfig {
   // Our implementation currently only works with scope set to 'r_liteprofile' 
   scope: string | string[];
 
-  defaults?: {
+  // defaults?: {
     /**
      * Default request options to use when performing outgoing HTTP requests.
      *
      * For example used when exchanging authorization codes for access tokens.
      */
     /** The URI of the authorization server's authorization endpoint. */
-    authorizationEndpointUri:string;
+    // authorizationEndpointUri:string;
 
-    requestOptions?: Omit<RequestOptions, "method">;
+    // requestOptions?: Omit<RequestOptions, "method">;
     /** Default scopes to request unless otherwise specified. */
     
     /** Default state validator to use for validating the authorization response's state value. */
-    stateValidator?: (state: string | null) => boolean;
-  };
+    // stateValidator?: (state: string | null) => boolean;
+  // };
 }
 
 /**
