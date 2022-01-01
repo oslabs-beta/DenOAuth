@@ -7,9 +7,10 @@ export class LinkedInStrategy {
     clientSecret: string,
     scope: string,
     redirect: string
-  ) {
-    super(clientId, clientSecret, scope, redirect);
-  }
+  )
+  // ) {
+    // super(clientId, clientSecret, scope, redirect);
+  // }
 
 // {clientId} = code;
 
