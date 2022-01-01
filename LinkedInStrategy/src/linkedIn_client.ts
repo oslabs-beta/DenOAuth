@@ -1,5 +1,5 @@
 import { LinkedInStrategy } from './linkedInAuth.ts';
-import { RequestOptions } from './types.ts';
+// import { RequestOptions } from './types.ts';
 
 
 export interface LinkedInClientConfig {
@@ -12,6 +12,9 @@ export interface LinkedInClientConfig {
   /** The URI of the authorization server's token endpoint. */
   tokenUri:string;
 
+  // Our implementation currently only works with scope set to 'r_liteprofile' 
+  scope: string | string[];
+
   defaults?: {
     /**
      * Default request options to use when performing outgoing HTTP requests.
@@ -23,8 +26,7 @@ export interface LinkedInClientConfig {
 
     requestOptions?: Omit<RequestOptions, "method">;
     /** Default scopes to request unless otherwise specified. */
-    // Our implementation currently only works with scope set to 'r_liteprofile' 
-    scope: string | string[];
+    
     /** Default state validator to use for validating the authorization response's state value. */
     stateValidator?: (state: string | null) => boolean;
   };
