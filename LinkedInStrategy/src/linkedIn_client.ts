@@ -40,7 +40,7 @@ export interface LinkedInClientConfig {
 
 export class LinkedInClient {
   // implements all the methods required to complete OAuth process
-  public code = new LinkedInStrategy(this);
+  public code = new LinkedInStrategy(this.clientId, this.clientSecret, this.redirect, this.scope);
 
   // interface values cannot be changed outside of class
   constructor(
