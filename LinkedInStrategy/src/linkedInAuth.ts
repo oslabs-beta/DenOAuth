@@ -2,8 +2,13 @@ import type { LinkedInClientConfig, LinkedInClient } from './linkedIn_client.ts'
 
 
 export class LinkedInStrategy {
-  constructor(client: LinkedInClient) {
-    super();
+  constructor(
+    clientId: string,
+    clientSecret: string,
+    scope: string,
+    redirect: string
+  ) {
+    super(clientId, clientSecret, scope, redirect);
   }
 
 // {clientId} = code;
@@ -13,7 +18,7 @@ export class LinkedInStrategy {
   // hardcode in createLink
   createLink() {
     const state:number = Math.floor(Math.random() * 1000000000);
-    const encode:string = encodeURIComponent(this.client.redirect);
+    const encode:string = encodeURIComponent(this.redirect);
     let SampleLink:string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.scope}`;
     return SampleLink;
   }
