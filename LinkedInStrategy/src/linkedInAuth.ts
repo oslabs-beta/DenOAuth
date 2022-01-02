@@ -83,8 +83,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     .then((paramsString: any) => {
       const params = new URLSearchParams(paramsString);
         console.log(params);
-        const tokenKey:any = [];
-        console.log(`tokenKey ${tokenKey}`)
+        const tokenKey = [];
         for (const [key, value] of params.entries()){
         tokenKey.push(key, value)
         }
@@ -93,7 +92,7 @@ export class LinkedInStrategy extends LinkedInGrant {
         const values = Object.values(obj);
         console.log(`values ${values}`)
         const tokenArr:any = []
-        let i = 17;
+        let i = 20;
         while (values[i] !== '"') {
           tokenArr.push(values[i])
           i++
