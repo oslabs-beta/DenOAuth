@@ -60,6 +60,8 @@ export class LinkedInStrategy extends LinkedInGrant {
    // part 2
    async findCode(stringPathName:string) {
     // const stringPathName: String = ctx.request.url;
+    let bearerToken:string;
+    let result:any;
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
@@ -81,6 +83,7 @@ export class LinkedInStrategy extends LinkedInGrant {
      })
     .then( async (paramsString: any) => {
       const params = new URLSearchParams(paramsString);
+        console.log(params);
         const tokenKey = [];
         for (const [key, value] of params.entries()){
         tokenKey.push(key, value)
@@ -88,24 +91,30 @@ export class LinkedInStrategy extends LinkedInGrant {
 
         const obj:any = tokenKey[0];
         const values = Object.values(obj);
+        console.log(`values ${values}`)
         const tokenArr = []
         let i = 17;
         while (values[i] !== '"') {
+          console.log(values[i])
           tokenArr.push(values[i])
           i++
           }
-          const bearerToken = await tokenArr.join('');
-          const result = await fetch("https://api.linkedin.com/v2/me", {
-            headers: {
-              Authorization: `Bearer ${bearerToken}`,
-            },
-          })
-          .then(response => response.json())
-          .then(data => console.log(data))
-          .catch(console.error)
-          return result;
-        })
+          bearerToken = await tokenArr.join('');
+          console.log(`bearerToken: ${bearerToken}`)
+          result = await fetch("https://api.linkedin.com/v2/me", {
+                headers: {
+                  Authorization: `Bearer ${bearerToken}`,
+                },
+              })
+              .then(response => response.json())
+              .then(data => console.log(data))
+              .catch(console.error)
+              // return result;
+        }) 
+        return result 
+        
     } 
+  
   }
 
 // potentially part of LOAuthOne
