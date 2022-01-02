@@ -95,17 +95,16 @@ export class LinkedInStrategy extends LinkedInGrant {
           i++
           }
           const bearerToken = await tokenArr.join('');
-          console.log(`bearerToken: ${bearerToken}`)
-          await fetch("https://api.linkedin.com/v2/me", {
-                headers: {
-                  Authorization: `Bearer ${bearerToken}`,
-                },
-              })
-              .then(response => response.json())
-              .then(data => console.log(data))
-              .catch(console.error)
-        })  
-        return
+          const result = await fetch("https://api.linkedin.com/v2/me", {
+            headers: {
+              Authorization: `Bearer ${bearerToken}`,
+            },
+          })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(console.error)
+          return result;
+        })
     } 
   }
 
