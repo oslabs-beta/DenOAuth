@@ -9,7 +9,7 @@ export class LinkedInStrategy extends LinkedInClient {
     // redirect: string
     client: LinkedInClient
   ) {
-    super(client);
+    super(client.config);
   }
 
 // {clientId} = code;
