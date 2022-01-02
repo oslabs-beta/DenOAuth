@@ -82,7 +82,6 @@ export class LinkedInStrategy extends LinkedInGrant {
      })
     .then( async (paramsString: any) => {
       const params = new URLSearchParams(paramsString);
-        console.log(params);
         const tokenKey = [];
         for (const [key, value] of params.entries()){
         tokenKey.push(key, value)
@@ -90,7 +89,6 @@ export class LinkedInStrategy extends LinkedInGrant {
 
         const obj:any = tokenKey[0];
         const values = Object.values(obj);
-        console.log(`values ${values}`)
         const tokenArr = []
         let i = 17;
         while (values[i] !== '"') {
@@ -99,7 +97,11 @@ export class LinkedInStrategy extends LinkedInGrant {
           }
         bearerToken = await tokenArr.join('');
         console.log(`bearerToken: ${bearerToken}`)
-        return bearerToken
+        return await fetch("https://api.linkedin.com/v2/me", {
+              headers: {
+                Authorization: `Bearer ${bearerToken}`,
+              },
+            });
       })  
   } 
 }
