@@ -56,11 +56,11 @@ export class LinkedInStrategy extends LinkedInGrant {
   //   });
   //   const {localizedFirstName} = await userResponse.json()
   // }
-
-  // part 2
-    async findCode(stringPathName:string) {
+  
+   // part 2
+   async findCode(stringPathName:string) {
     // const stringPathName: String = ctx.request.url;
-
+    let bearerToken:string;
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
@@ -80,7 +80,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     .then((response: any) => {
       return response.text()
      })
-    .then((paramsString: any) => {
+    .then( async (paramsString: any) => {
       const params = new URLSearchParams(paramsString);
         console.log(params);
         const tokenKey = [];
@@ -95,12 +95,12 @@ export class LinkedInStrategy extends LinkedInGrant {
         let i = 17;
         while (values[i] !== '"') {
           console.log(values[i])
-          tokenArr.push(JSON.stringify(values[i]))
+          tokenArr.push(values[i])
           i++
           }
-        const bearerToken:string = JSON.stringify(tokenArr.join(''));
-        return bearerToken;
-      })
+        bearerToken = await tokenArr.join('');
+        return bearerToken
+      })  
   } 
 }
 
