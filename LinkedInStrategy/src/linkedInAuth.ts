@@ -98,7 +98,7 @@ export class LinkedInStrategy extends LinkedInGrant {
           tokenArr.push(values[i])
           i++
           }
-        const bearerToken:string = stringtokenArr.join('');
+        const bearerToken:string = JSON.stringify(tokenArr.join(''));
         return bearerToken;
       })
   } 
