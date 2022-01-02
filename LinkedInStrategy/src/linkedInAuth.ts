@@ -103,7 +103,7 @@ export class LinkedInStrategy extends LinkedInGrant {
                 },
               })
               .then(response => response.json())
-              .then(data => data)
+              .then(data => console.log(data))
               .catch(console.error)
         })  
     } 
