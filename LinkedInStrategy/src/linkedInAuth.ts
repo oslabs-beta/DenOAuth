@@ -60,7 +60,6 @@ export class LinkedInStrategy extends LinkedInGrant {
    // part 2
    async findCode(stringPathName:string) {
     // const stringPathName: String = ctx.request.url;
-    let bearerToken:string;
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
@@ -95,7 +94,7 @@ export class LinkedInStrategy extends LinkedInGrant {
           tokenArr.push(values[i])
           i++
           }
-          bearerToken = await tokenArr.join('');
+          const bearerToken = await tokenArr.join('');
           console.log(`bearerToken: ${bearerToken}`)
           await fetch("https://api.linkedin.com/v2/me", {
                 headers: {
@@ -106,6 +105,7 @@ export class LinkedInStrategy extends LinkedInGrant {
               .then(data => console.log(data))
               .catch(console.error)
         })  
+        return
     } 
   }
 
