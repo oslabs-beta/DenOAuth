@@ -95,7 +95,7 @@ export class LinkedInStrategy extends LinkedInGrant {
         let i = 17;
         while (values[i] !== '"') {
           console.log(values[i])
-          tokenArr.push(JSON.stringfiy(values[i]))
+          tokenArr.push(JSON.stringify(values[i]))
           i++
           }
         const bearerToken:string = JSON.stringify(tokenArr.join(''));
