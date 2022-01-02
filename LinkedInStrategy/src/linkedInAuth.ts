@@ -95,16 +95,19 @@ export class LinkedInStrategy extends LinkedInGrant {
           tokenArr.push(values[i])
           i++
           }
-        bearerToken = await tokenArr.join('');
-        console.log(`bearerToken: ${bearerToken}`)
-        return await fetch("https://api.linkedin.com/v2/me", {
-              headers: {
-                Authorization: `Bearer ${bearerToken}`,
-              },
-            });
-      })  
-  } 
-}
+          bearerToken = await tokenArr.join('');
+          console.log(`bearerToken: ${bearerToken}`)
+          await fetch("https://api.linkedin.com/v2/me", {
+                headers: {
+                  Authorization: `Bearer ${bearerToken}`,
+                },
+              })
+              .then(response => response.json())
+              .then(data => data)
+              .catch(console.error)
+        })  
+    } 
+  }
 
 // potentially part of LOAuthOne
 // check if loggin in or out
