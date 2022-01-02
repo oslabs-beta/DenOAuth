@@ -45,5 +45,9 @@ export class LinkedInClient {
   // interface values cannot be changed outside of class
   constructor(
     public readonly config: Readonly<LinkedInClientConfig>,
+    // clientId: string,
+    // clientSecret: string,
+    // scope: string,
+    // redirect: string
   ) {}
 }
