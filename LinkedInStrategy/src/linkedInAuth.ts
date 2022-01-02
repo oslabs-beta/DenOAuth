@@ -84,13 +84,14 @@ export class LinkedInStrategy extends LinkedInGrant {
       const params = new URLSearchParams(paramsString);
         console.log(params);
         const tokenKey = [];
+        console.log(`tokenKey ${tokenKey}`)
         for (const [key, value] of params.entries()){
         tokenKey.push(key, value)
         }
 
         const obj:any = tokenKey[0];
         const values = Object.values(obj);
-
+        console.log(`values ${values}`)
         const tokenArr:any = []
         let i = 17;
         while (values[i] !== '"') {
