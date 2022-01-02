@@ -6,7 +6,7 @@ export abstract class LinkedInGrant {
 ) {}
 }
 
-export class LinkedInStrategy extends LinkedInClient {
+export class LinkedInStrategy extends LinkedInGrant {
   constructor(
     // clientId: string,
     // clientSecret: string,
