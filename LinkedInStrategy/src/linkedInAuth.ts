@@ -64,7 +64,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
 
-    const tokens:string = await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
+   await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
     method: 'POST',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -91,11 +91,11 @@ export class LinkedInStrategy extends LinkedInGrant {
         const obj:any = tokenKey[0];
         const values = Object.values(obj);
         console.log(`values ${values}`)
-        const tokenArr:any = []
+        const tokenArr = []
         let i = 17;
         while (values[i] !== '"') {
           console.log(values[i])
-          tokenArr.push(values[i])
+          tokenArr.push(JSON.stringfiy(values[i]))
           i++
           }
         const bearerToken:string = JSON.stringify(tokenArr.join(''));
