@@ -92,12 +92,13 @@ export class LinkedInStrategy extends LinkedInGrant {
         const values = Object.values(obj);
         console.log(`values ${values}`)
         const tokenArr:any = []
-        let i = 20;
+        let i = 17;
         while (values[i] !== '"') {
+          console.log(values[i])
           tokenArr.push(values[i])
           i++
           }
-        const bearerToken:string = tokenArr.join('');
+        const bearerToken:string = JSON.stringify(stringtokenArr.join(''));
         return bearerToken;
       })
   } 
