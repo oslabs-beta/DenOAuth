@@ -17,10 +17,10 @@ export class GitHubStrategy extends GitHubGrant {
   // part 1
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink = () => {
-    const state: Number = Math.floor(Math.random() * 1000000000)
+    const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: any = encodeURIComponent(this.client.config.redirect)
     const encodeScope: any = encodeURIComponent(this.client.config.scope)
-    let SampleLink: String = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.config.cliendId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
+    let SampleLink: string = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
     return SampleLink
   }
 
@@ -43,7 +43,7 @@ export class GitHubStrategy extends GitHubGrant {
     },
     body: JSON.stringify({
       client_id: this.client.config.clientId,
-      client_secret: this.client.config.clientKey,
+      client_secret: this.client.config.clientSecret,
       code: parsedCode,
       redirect_uri: "http://localhost:3000/auth/github/callback"
   })
