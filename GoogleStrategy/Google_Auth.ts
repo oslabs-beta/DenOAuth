@@ -32,6 +32,7 @@ export class GoogleStrategy extends GoogleGrant {
     const code: string = JSON.stringify(stringPathName.search)
     console.log(code)
     const parsedCode = code.slice(code.indexOf('"?code=')+24, code.indexOf('&scope'))
+    const userResponse:any = [];
     console.log(`parsedCode ${parsedCode}`)
      
     /** Exchange the authorization code for an access token */
@@ -44,7 +45,7 @@ export class GoogleStrategy extends GoogleGrant {
     body: new URLSearchParams({
       'code': parsedCode,
       'client_id': this.client.config.clientId,
-      'client_secret': this.client.config.clientKey,
+      'client_secret': this.client.config.clientSecret,
       'redirect_uri': this.client.config.redirect,
       'grant_type': "authorization_code",
     })
