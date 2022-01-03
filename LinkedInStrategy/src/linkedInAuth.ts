@@ -90,16 +90,16 @@ export class LinkedInStrategy extends LinkedInGrant {
 
         const obj:any = tokenKey[0];
         const values = Object.values(obj);
-        console.log(`values ${values}`)
+        // console.log(`values ${values}`)
         const tokenArr = []
         let i = 17;
         while (values[i] !== '"') {
-          console.log(values[i])
+          // console.log(values[i])
           tokenArr.push(values[i])
           i++
           }
           const bearerToken = await tokenArr.join('');
-          console.log(`bearerToken: ${bearerToken}`)
+          // console.log(`bearerToken: ${bearerToken}`)
           await fetch("https://api.linkedin.com/v2/me", {
                 headers: {
                   Authorization: `Bearer ${bearerToken}`,
@@ -109,7 +109,7 @@ export class LinkedInStrategy extends LinkedInGrant {
               .then(data => result.push(data))
               .catch(console.error)
         }) 
-        return result.join('');
+        return result[0];
     } 
   }
 
