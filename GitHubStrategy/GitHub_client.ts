@@ -1,4 +1,4 @@
-import { GitHubStrategy } from './linkedIn_Auth.ts';
+import { GitHubStrategy } from './GitHub_Auth.ts';
 
 export interface GitHubClientConfig {
   /** The client ID provided by the authorization server. */
@@ -17,10 +17,10 @@ export interface GitHubClientConfig {
 
 export class GitHubClient {
   // implements all the methods required to complete OAuth process
-  public code = new LinkedInStrategy(this);
+  public code = new GitHubStrategy(this);
 
   // interface values cannot be changed outside of class
   constructor(
-    public readonly config: Readonly<LinkedInClientConfig>,
+    public readonly config: Readonly<GitHubClientConfig>,
   ) {}
 }
