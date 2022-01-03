@@ -20,7 +20,7 @@ export class GitHubStrategy extends GitHubGrant {
     const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: any = encodeURIComponent(this.client.config.redirect)
     const encodeScope: any = encodeURIComponent(this.client.config.scope)
-    let SampleLink: string = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
+    const SampleLink = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
     return SampleLink
   }
 

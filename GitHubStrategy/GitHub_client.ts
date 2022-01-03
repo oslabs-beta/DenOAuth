@@ -11,7 +11,7 @@ export interface GitHubClientConfig {
   tokenUri:string;
 
   // Our implementation currently only works with scope set to 'read:user' 
-  scope: string | string[];
+  scope: any;
 }
 
 
