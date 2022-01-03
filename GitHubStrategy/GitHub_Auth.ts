@@ -18,9 +18,9 @@ export class GitHubStrategy extends GitHubGrant {
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink = () => {
     const state: Number = Math.floor(Math.random() * 1000000000)
-    const encodeLink: any = encodeURIComponent(this.client.redirect)
-    const encodeScope: any = encodeURIComponent(this.client.scope)
-    let SampleLink: String = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.cliendId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
+    const encodeLink: any = encodeURIComponent(this.client.config.redirect)
+    const encodeScope: any = encodeURIComponent(this.client.config.scope)
+    let SampleLink: String = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.config.cliendId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
     return SampleLink
   }
 
@@ -42,8 +42,8 @@ export class GitHubStrategy extends GitHubGrant {
     'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      client_id: clientId,
-      client_secret: clientKey,
+      client_id: this.client.config.clientId,
+      client_secret: this.client.config.clientKey,
       code: parsedCode,
       redirect_uri: "http://localhost:3000/auth/github/callback"
   })
@@ -52,7 +52,7 @@ export class GitHubStrategy extends GitHubGrant {
   // console.log(response)
   return response.text()
 })
-.then((paramsString: any) => {
+.then( async (paramsString: any) => {
   let params = new URLSearchParams(paramsString)
   // console.log(params)
   let tokenKey = [];
@@ -76,7 +76,7 @@ export class GitHubStrategy extends GitHubGrant {
           /** Use the access token to make an authenticated API request */
           await fetch("https://api.github.com/user", {
             headers: {
-            Authorization: `Bearer ${bearToken}`,
+            Authorization: `Bearer ${bearerToken}`,
                 },
             })
               .then(response => response.json())
