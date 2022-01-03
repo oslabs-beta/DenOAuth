@@ -58,12 +58,11 @@ export class LinkedInStrategy extends LinkedInGrant {
   // }
 
    // part 2
-   async findCode(stringPathName:string) {
+      async findCode(stringPathName:string) {
     // const stringPathName: String = ctx.request.url;
-    let bearerToken:string;
-    let result:any;
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
+    const result:any = [];
 
    await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
     method: 'POST',
@@ -99,22 +98,19 @@ export class LinkedInStrategy extends LinkedInGrant {
           tokenArr.push(values[i])
           i++
           }
-          bearerToken = await tokenArr.join('');
+          const bearerToken = await tokenArr.join('');
           console.log(`bearerToken: ${bearerToken}`)
-          result = await fetch("https://api.linkedin.com/v2/me", {
+          await fetch("https://api.linkedin.com/v2/me", {
                 headers: {
                   Authorization: `Bearer ${bearerToken}`,
                 },
               })
               .then(response => response.json())
-              .then(data => console.log(data))
+              .then(data => result.push(data))
               .catch(console.error)
-              // return result;
         }) 
-        return result 
-        
+        return result.join('');
     } 
-  
   }
 
 // potentially part of LOAuthOne
