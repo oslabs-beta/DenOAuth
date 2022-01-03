@@ -19,7 +19,7 @@ export class GoogleStrategy extends GoogleGrant {
   createLink() {
     const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: any = encodeURIComponent(this.client.config.redirect)
-    let SampleLink: String = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&include_granted_scopes=${this.client.config.scope}&response_type=code&state=${state}&redirect_uri=${encodeLink}&client_id=${this.client.config.clientId}`
+    let SampleLink: String = `https://accounts.google.com/o/oauth2/v2/auth?scope=${this.client.config.scope}&response_type=code&state=${state}&redirect_uri=${encodeLink}&client_id=${this.client.config.clientId}`
     return SampleLink
   }
 
