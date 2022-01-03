@@ -16,12 +16,11 @@ export class GoogleStrategy extends GoogleGrant {
   
   // part 1
   /** Builds a URI you can redirect a user to to make the authorization request. */
-  createLink = () => {
+  createLink() {
     const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: any = encodeURIComponent(this.client.config.redirect)
     let SampleLink: String = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&include_granted_scopes=${this.client.config.scope}&response_type=code&state=${state}&redirect_uri=${encodeLink}&client_id=${this.client.config.clientId}`
     return SampleLink
-  }
   }
 
 
@@ -44,7 +43,7 @@ export class GoogleStrategy extends GoogleGrant {
 
     body: new URLSearchParams({
       'code': parsedCode,
-      'client_id': this.client.conflig.clientId,
+      'client_id': this.client.config.clientId,
       'client_secret': this.client.config.clientKey,
       'redirect_uri': this.client.config.redirect,
       'grant_type': "authorization_code",
@@ -54,7 +53,7 @@ export class GoogleStrategy extends GoogleGrant {
     console.log(response)
     return response.text()
   })
-  .then((paramsString: any) => {
+  .then( async (paramsString: any) => {
     let params = new URLSearchParams(paramsString)
       console.log(`params ${params}`);
       let tokenKey = [];
