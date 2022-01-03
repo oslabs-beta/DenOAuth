@@ -10,7 +10,7 @@ export interface GitHubClientConfig {
   /** The URI of the authorization server's token endpoint. */
   tokenUri:string;
 
-  // Our implementation currently only works with scope set to 'r_liteprofile' 
+  // Our implementation currently only works with scope set to 'read:user' 
   scope: string | string[];
 }
 
