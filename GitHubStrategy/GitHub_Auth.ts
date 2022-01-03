@@ -13,15 +13,15 @@ export class GitHubStrategy extends GitHubGrant {
     super(client);
   }
 
-  // const SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
-
+  
   // part 1
   /** Builds a URI you can redirect a user to to make the authorization request. */
-  createLink() {
-    const state:number = Math.floor(Math.random() * 1000000000);
-    const encode:string = encodeURIComponent(this.client.config.redirect);
-    const SampleLink = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.config.scope}`;
-    return SampleLink;
+  createLink = () => {
+    const state: Number = Math.floor(Math.random() * 1000000000)
+    const encodeLink: any = encodeURIComponent(this.client.redirect)
+    const encodeScope: any = encodeURIComponent(this.client.scope)
+    let SampleLink: String = `https://github.com/login/oauth/authorize?response_type=code&client_id=${this.client.cliendId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`
+    return SampleLink
   }
 
 
@@ -35,45 +35,50 @@ export class GitHubStrategy extends GitHubGrant {
     const userResponse:any = [];
     
    /** Exchange the authorization code for an access token */
-   await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
+   await fetch('https://github.com/login/oauth/access_token',{
     method: 'POST',
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
     },
-    body: new URLSearchParams({
-      'grant_type': "authorization_code", // hard code
-      'code': parsedCode, // helper function
-      'redirect_uri': this.client.config.redirect, // linkedin uri
-      'client_id': this.client.config.clientId, // provided by linkedin
-      'client_secret': this.client.config.clientSecret //provided by linkedin
-      })
-    })
-    .then((response: any) => {
-      return response.text()
-     })
-    .then( async (paramsString: any) => {
-      const params = new URLSearchParams(paramsString);
-        const tokenKey = [];
-        for (const [key, value] of params.entries()){
-        tokenKey.push(key, value)
-        }
-
-        const obj:any = tokenKey[0];
-        const values = Object.values(obj);
-        const tokenArr = []
-        let i = 17;
-        while (values[i] !== '"') {
-          tokenArr.push(values[i])
-          i++
-          }
-          const bearerToken = await tokenArr.join('');
+    body: JSON.stringify({
+      client_id: clientId,
+      client_secret: clientKey,
+      code: parsedCode,
+      redirect_uri: "http://localhost:3000/auth/github/callback"
+  })
+})
+.then((response: any) => {
+  // console.log(response)
+  return response.text()
+})
+.then((paramsString: any) => {
+  let params = new URLSearchParams(paramsString)
+  // console.log(params)
+  let tokenKey = [];
+  for (const [key, value] of params.entries()){
+  // for (const key in params){
+    
+    tokenKey.push(key, value)
+  }
+  console.log(tokenKey[0])
+  let obj: any = tokenKey[0]
+  let values = Object.values(obj)
+  // console.log(values)
+  const tokenArr = []
+  let i = 17;
+  while (values[i] !== '"') {
+    tokenArr.push(values[i])
+    i++
+  }
+  const bearerToken = tokenArr.join('')
 
           /** Use the access token to make an authenticated API request */
-          await fetch("https://api.linkedin.com/v2/me", {
-                headers: {
-                  Authorization: `Bearer ${bearerToken}`,
+          await fetch("https://api.github.com/user", {
+            headers: {
+            Authorization: `Bearer ${bearToken}`,
                 },
-              })
+            })
               .then(response => response.json())
               .then(data => {
                 console.log(data)
@@ -83,4 +88,4 @@ export class GitHubStrategy extends GitHubGrant {
         }) 
         return userResponse[0];
     } 
-  }
+}

@@ -83,4 +83,4 @@ export class LinkedInStrategy extends LinkedInGrant {
         }) 
         return userResponse[0];
     } 
-  }
+}
