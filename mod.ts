@@ -1,1 +1,1 @@
-export { LinkedInClient } from './LinkedInStrategy/src/linkedIn_client.ts';
+export { LinkedInClient } from './LinkedInStrategy/linkedIn_client.ts';
