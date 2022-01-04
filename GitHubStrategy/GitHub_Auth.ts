@@ -27,7 +27,7 @@ export class GitHubStrategy extends GitHubGrant {
 
 
   // part 2
-  async processAuth(stringPathName:string) {
+  async processAuth(stringPathName: any) {
     /** Parses the authorization response request tokens from the authorization server. */
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
