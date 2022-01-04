@@ -9,7 +9,7 @@ export interface GoogleClientConfig {
   redirect:string;
   /** The URI of the authorization server's token endpoint. */
   tokenUri:string;
-  /**  */
+  /** Scopes to request with the authorization request. */
   scope: any;
 }
 

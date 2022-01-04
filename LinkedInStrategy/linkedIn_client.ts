@@ -11,6 +11,7 @@ export interface LinkedInClientConfig {
   tokenUri:string;
 
   // Our implementation currently only works with scope set to 'r_liteprofile' 
+  /** Scopes to request with the authorization request. */
   scope: string | string[];
 }
 
