@@ -26,7 +26,7 @@ export class GoogleStrategy extends GoogleGrant {
 
 
    // part 2 of DenOAuth strategy
-  async processAuth(stringPathName:string) {
+  async processAuth(stringPathName:any) {
     /** Parses the authorization response request tokens from the authorization server. */
     const code: string = JSON.stringify(stringPathName.search)
     const parsedCode = code.slice(code.indexOf('"?code=')+24, code.indexOf('&scope'))
@@ -50,7 +50,7 @@ export class GoogleStrategy extends GoogleGrant {
     .then((response) => {
      return response.text()
     })
-    .then( async (paramsString: any) => {
+    .then( async (paramsString:any) => {
       const params = new URLSearchParams(paramsString)
       const tokenKey = [];
       for (const [key, value] of params.entries()){
