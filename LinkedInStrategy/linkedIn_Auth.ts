@@ -3,7 +3,7 @@ import { LinkedInClient } from './linkedIn_client.ts';
 export abstract class LinkedInGrant {
 	constructor(
 	protected readonly client: LinkedInClient
-) {}
+  ) {}
 }
 
 export class LinkedInStrategy extends LinkedInGrant {
@@ -13,9 +13,9 @@ export class LinkedInStrategy extends LinkedInGrant {
     super(client);
   }
 
-  // const SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
+  // SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
 
-  // part 1
+  // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink() {
     const state:number = Math.floor(Math.random() * 1000000000);
@@ -25,14 +25,12 @@ export class LinkedInStrategy extends LinkedInGrant {
   }
 
 
-   // part 2
+   // part 2 of DenOAuth strategy
   async processAuth(stringPathName:string) {
-   /**
-   * Parses the authorization response request tokens from the authorization server.
-   */
+   /** Parses the authorization response request tokens from the authorization server. */
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'));
-    const userResponse:any = [];
+    const userResponse:unknown[] = [];
     
    /** Exchange the authorization code for an access token */
    await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
@@ -48,10 +46,10 @@ export class LinkedInStrategy extends LinkedInGrant {
       'client_secret': this.client.config.clientSecret //provided by linkedin
       })
     })
-    .then((response: any) => {
+    .then((response) => {
       return response.text()
      })
-    .then( async (paramsString: any) => {
+    .then( async (paramsString: string) => {
       const params = new URLSearchParams(paramsString);
         const tokenKey = [];
         for (const [key, value] of params.entries()){
@@ -59,8 +57,8 @@ export class LinkedInStrategy extends LinkedInGrant {
         }
 
         const obj:any = tokenKey[0];
-        const values = Object.values(obj);
-        const tokenArr = []
+        const values: unknown[] = Object.values(obj);
+        const tokenArr: unknown[] = []
         let i = 17;
         while (values[i] !== '"') {
           tokenArr.push(values[i])
@@ -76,7 +74,8 @@ export class LinkedInStrategy extends LinkedInGrant {
               })
               .then(response => response.json())
               .then(data => {
-                console.log(data)
+                // Returning Google Response Data in console for Client
+                console.log(`LinkedIn Response Data: ${data}`)
                 userResponse.push(data)
               })
               .catch(console.error)

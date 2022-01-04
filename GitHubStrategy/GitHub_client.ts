@@ -11,6 +11,7 @@ export interface GitHubClientConfig {
   tokenUri:string;
 
   // Our implementation currently only works with scope set to 'read:user' 
+  /** Scopes to request with the authorization request. */
   scope: any;
 }
 
