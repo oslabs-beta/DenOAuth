@@ -49,7 +49,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     .then((response) => {
       return response.text()
      })
-    .then( async (paramsString: string) => {
+    .then( async (paramsString: any) => {
       const params = new URLSearchParams(paramsString);
         const tokenKey = [];
         for (const [key, value] of params.entries()){
