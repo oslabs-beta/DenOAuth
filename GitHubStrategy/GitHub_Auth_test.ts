@@ -1,6 +1,6 @@
 import { GitHubClient } from './GitHub_client.ts';
 import { GitHubStrategy } from './GitHub_Auth.ts';
-import { assertEquals, assert } from "https://deno.land/std@0.119.0/testing/asserts.ts"
+import { assertEquals } from "https://deno.land/std@0.119.0/testing/asserts.ts"
 
 Deno.test("GitHub's createLink method should return the correct url", () => {
   const client = new GitHubClient({

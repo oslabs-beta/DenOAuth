@@ -1,6 +1,6 @@
 import { opine, serveStatic } from "https://deno.land/x/opine@2.0.2/mod.ts";
 import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { GitHubClient, LinkedInClient, GoogleClient } from 'https://raw.githubusercontent.com/oslabs-beta/DenOAuth/bd756b2d5d0e1bb2961dcf35fc4b9bf4f005758d/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient } from 'https://deno.land/x/denoauth@v1.0.0/mod.ts'
 
 
 const app = opine();

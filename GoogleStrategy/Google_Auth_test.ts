@@ -1,6 +1,6 @@
 import { GoogleClient } from './Google_client.ts';
 import { GoogleStrategy } from './Google_Auth.ts';
-import { assertEquals, assert } from "https://deno.land/std@0.119.0/testing/asserts.ts"
+import { assertEquals } from "https://deno.land/std@0.119.0/testing/asserts.ts"
 
 Deno.test("Google's createLink method should return the correct url", () => {
   const client = new GoogleClient({
