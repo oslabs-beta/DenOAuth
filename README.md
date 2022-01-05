@@ -1,11 +1,11 @@
 # DenOAuth
 A library for implementing authentication through third party APIs in Deno applications. 
-DenOAuth attemps to create middleware that can be utilized in any type of application without relience on other third party modules. It is currently available with apps running both oak and opine application frameworks.
+DenOAuth attempts to create middleware that can be utilized in any type of application without relience on other third party modules. It is currently available with apps running both oak and opine application frameworks.
 
 DenOAuth was inspired by js-client-oauth2
 
 # Three part strategy
-Denoauth has a three part process for authorization through each specific api.
+DenOAuth has a three part process for authorization through each specific api.
  
  First: Initialize a new object for each client:
 
@@ -29,8 +29,8 @@ Denoauth has a three part process for authorization through each specific api.
     };
   ```
     
-  Third: Call our processAuth function enterting the current url as a parameter. This will extract the current code, exchanging the code
-   for a bearer token. The function then exchanges the token for the information about the user provided from the third party api. 
+  Third: Call our processAuth function, entering the current url as a parameter. This will extract the current code, exchanging the code
+   for a bearer token. The function then exchanges the token for the information about the user provided from the third party API. 
   
 
   ```

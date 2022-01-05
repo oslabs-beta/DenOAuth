@@ -8,24 +8,24 @@ const app = opine();
 
 
 const GitHubObject = new GitHubClient({
-    clientId: '8d769a8e565111f853fb',
-    clientSecret: "338d114ea503daf91ce92c4fbd18a21927d82970",
+    clientId: '<your_clientId>',
+    clientSecret: "<your_cliendSecret>",
     tokenUri: 'https://github.com/login/oauth/access_token',
     redirect: "http://localhost:3000/auth/github/callback",
     scope: "read:user"
 });
 
 const LinkedInObject = new LinkedInClient({
-    clientId: '8693ww7e9p6u3t',
-    clientSecret: 'LSX8D4d74EyR8c35',
+    clientId: '<your_clientId>',
+    clientSecret: '<your_cliendSecret>',
     tokenUri: 'https://api.linkedin.com/v2/me',
     redirect: 'http://localhost:3000/auth/linkedin/callback',
     scope: 'r_liteprofile'
 });
 
 const GoogleObject = new GoogleClient({
-    clientId: '355975710617-pu1n5okl8jpuh9ofqnclji3bqk6gk88o.apps.googleusercontent.com',
-    clientSecret: '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',
+    clientId: '<your_clientId>',
+    clientSecret: '<your_cliendSecret>',
     tokenUri: 'https://accounts.google.com/o/oauth2/token',
     redirect: 'http://localhost:3000/auth/google/callback',
     scope: 'https://mail.google.com&access_type=offline&include_granted_scopes=true'
