@@ -9,7 +9,7 @@ const app = opine();
 
 const GitHubObject = new GitHubClient({
     clientId: '<your_clientId>',
-    clientSecret: "<your_cliendSecret>",
+    clientSecret: "<your_clientSecret>",
     tokenUri: 'https://github.com/login/oauth/access_token',
     redirect: "http://localhost:3000/auth/github/callback",
     scope: "read:user"
@@ -17,7 +17,7 @@ const GitHubObject = new GitHubClient({
 
 const LinkedInObject = new LinkedInClient({
     clientId: '<your_clientId>',
-    clientSecret: '<your_cliendSecret>',
+    clientSecret: '<your_clientSecret>',
     tokenUri: 'https://api.linkedin.com/v2/me',
     redirect: 'http://localhost:3000/auth/linkedin/callback',
     scope: 'r_liteprofile'
@@ -25,7 +25,7 @@ const LinkedInObject = new LinkedInClient({
 
 const GoogleObject = new GoogleClient({
     clientId: '<your_clientId>',
-    clientSecret: '<your_cliendSecret>',
+    clientSecret: '<your_clientSecret>',
     tokenUri: 'https://accounts.google.com/o/oauth2/token',
     redirect: 'http://localhost:3000/auth/google/callback',
     scope: 'https://mail.google.com&access_type=offline&include_granted_scopes=true'
