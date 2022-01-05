@@ -13,7 +13,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     super(client);
   }
 
-  // SampleLink: String = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
+  // SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
 
   // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
