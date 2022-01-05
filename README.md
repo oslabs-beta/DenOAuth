@@ -29,8 +29,8 @@ DenOAuth has a three part process for authorization through each specific api.
     };
   ```
     
-  Third: Call our processAuth function enterting the current url as a parameter. This will extract the current code, exchanging the code
-   for a bearer token. The function then exchanges the token for the information about the user provided from the third party api. 
+  Third: Call our processAuth function, entering the current url as a parameter. This will extract the current code, exchanging the code
+   for a bearer token. The function then exchanges the token for the information about the user provided from the third party API. 
   
 
   ```
