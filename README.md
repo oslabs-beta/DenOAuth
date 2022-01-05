@@ -5,7 +5,7 @@ DenOAuth attempts to create middleware that can be utilized in any type of appli
 DenOAuth was inspired by js-client-oauth2
 
 # Three part strategy
-Denoauth has a three part process for authorization through each specific api.
+DenOAuth has a three part process for authorization through each specific api.
  
  First: Initialize a new object for each client:
 
