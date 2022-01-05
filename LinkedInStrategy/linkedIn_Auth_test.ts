@@ -1,6 +1,6 @@
 import { LinkedInClient } from './linkedIn_client.ts';
 import { LinkedInStrategy } from './linkedIn_Auth.ts';
-import { assertEquals, assert } from "https://deno.land/std@0.119.0/testing/asserts.ts"
+import { assertEquals } from "https://deno.land/std@0.119.0/testing/asserts.ts"
 
 Deno.test("LinkedIn's createLink method should return the correct url", () => {
   const client = new LinkedInClient({
