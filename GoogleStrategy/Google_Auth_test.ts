@@ -1,5 +1,5 @@
 import { GoogleClient } from './Google_client.ts';
-import { GoogleStrategy } from './Google_Auth.ts';
+// import { GoogleStrategy } from './Google_Auth.ts';
 import { assertEquals } from "https://deno.land/std@0.119.0/testing/asserts.ts"
 
 Deno.test("Google's createLink method should return the correct url", () => {
@@ -19,4 +19,18 @@ Deno.test("Google's createLink method should return the correct url", () => {
     dummy,
     `https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&include_granted_scopes=true&response_type=code&state=${dummyState}&redirect_uri=${dummyEncode}&client_id=688zz8dnnxjo4t`
     );
+});
+
+Deno.test("parsedCode should parse the URL correctly", () => {
+
+  const randomizedCode = Math.random().toString(36).substring(2,13);
+
+  const fakeStringPathName = (`?state=722421332&code=${randomizedCode}&scope=https://mail.google.com/`)
+  const code:string = JSON.stringify(fakeStringPathName);
+  const parsedCodeTest = code.slice(code.indexOf('"?code=')+24, code.indexOf('&scope'));
+  
+  assertEquals(
+    randomizedCode,
+    parsedCodeTest
+  )
 });

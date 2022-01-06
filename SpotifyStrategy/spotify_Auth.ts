@@ -18,6 +18,7 @@ export class SpotifyStrategy extends SpotifyGrant {
   // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink() {
+    // The primary reason for using the state parameter is to mitigate CSRF attacks by using a unique and non-guessable value associated with each authentication request about to be initiated.
     const state: number = Math.floor(Math.random() * 1000000000)  
     const SampleLink = `https://accounts.spotify.com/authorize?client_id=${this.client.config.clientId}&scope=${this.client.config.scope}&response_type=code&redirect_uri=${this.client.config.redirect}&state=${state}`;
     return SampleLink;

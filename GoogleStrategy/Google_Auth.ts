@@ -18,6 +18,7 @@ export class GoogleStrategy extends GoogleGrant {
   // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink() {
+    // The primary reason for using the state parameter is to mitigate CSRF attacks by using a unique and non-guessable value associated with each authentication request about to be initiated.
     const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: string = encodeURIComponent(this.client.config.redirect)
     const SampleLink = `https://accounts.google.com/o/oauth2/v2/auth?scope=${this.client.config.scope}&response_type=code&state=${state}&redirect_uri=${encodeLink}&client_id=${this.client.config.clientId}`

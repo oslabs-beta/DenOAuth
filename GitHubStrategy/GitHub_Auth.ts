@@ -18,6 +18,7 @@ export class GitHubStrategy extends GitHubGrant {
   // part 1
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink = () => {
+    // The primary reason for using the state parameter is to mitigate CSRF attacks by using a unique and non-guessable value associated with each authentication request about to be initiated.
     const state: number = Math.floor(Math.random() * 1000000000)
     const encodeLink: string = encodeURIComponent(this.client.config.redirect)
     const encodeScope: string = encodeURIComponent(this.client.config.scope)
