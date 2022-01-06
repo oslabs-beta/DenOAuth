@@ -1,26 +1,24 @@
-import { LinkedInClient } from './linkedIn_client.ts';
+import { SpotifyClient } from './spotify_client.ts';
 
-export abstract class LinkedInGrant {
+export abstract class SpotifyGrant {
 	constructor(
-	protected readonly client: LinkedInClient
+	protected readonly client: SpotifyClient
   ) {}
 }
 
-export class LinkedInStrategy extends LinkedInGrant {
+export class SpotifyStrategy extends SpotifyGrant {
   constructor(
-    client: LinkedInClient
+    client: SpotifyClient
   ) {
     super(client);
   }
 
-  // SampleLink: string = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id={your_client_id}&redirect_uri={your_callback_url}&state=foobar&scope=r_liteprofile%20r_emailaddress%20w_member_social`
+  // SampleLink: string = `https://accounts.spotify.com/authorize?client_id={clientId}&scope=user-read-private&response_type=code&redirect_uri={redirect}`
 
   // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink() {
-    const state:number = Math.floor(Math.random() * 1000000000);
-    const encode:string = encodeURIComponent(this.client.config.redirect);
-    const SampleLink = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.client.config.clientId}&redirect_uri=${encode}&state=${state}&scope=${this.client.config.scope}`;
+    const SampleLink = `https://accounts.spotify.com/authorize?client_id=${this.client.config.clientId}&scope=${this.client.config.scope}&response_type=code&redirect_uri=${this.client.config.redirect}`;
     return SampleLink;
   }
 
@@ -33,7 +31,7 @@ export class LinkedInStrategy extends LinkedInGrant {
     const userResponse:unknown[] = [];
     
    /** Exchange the authorization code for an access token */
-   await fetch('https://www.linkedin.com/oauth/v2/accessToken',{
+   await fetch('https://accounts.spotify.com/api/token',{
     method: 'POST',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -41,9 +39,9 @@ export class LinkedInStrategy extends LinkedInGrant {
     body: new URLSearchParams({
       'grant_type': "authorization_code", // hard code
       'code': parsedCode, // helper function
-      'redirect_uri': this.client.config.redirect, // linkedin uri
-      'client_id': this.client.config.clientId, // provided by linkedin
-      'client_secret': this.client.config.clientSecret //provided by linkedin
+      'redirect_uri': this.client.config.redirect, // Spotify uri
+      'client_id': this.client.config.clientId, // provided by Spotify
+      'client_secret': this.client.config.clientSecret //provided by Spotify
       })
     })
     .then((response) => {
@@ -67,15 +65,15 @@ export class LinkedInStrategy extends LinkedInGrant {
           const bearerToken = await tokenArr.join('');
 
           /** Use the access token to make an authenticated API request */
-          await fetch("https://api.linkedin.com/v2/me", {
+          await fetch("https://api.spotify.com/v1/me", {
                 headers: {
                   Authorization: `Bearer ${bearerToken}`,
                 },
               })
               .then(response => response.json())
               .then(data => {
-                // Returning LinkedIn Response Data in console for Client
-                console.log(`LinkedIn Response Data: ${data}`)
+                // Returning Spotify Response Data in console for Client
+                console.log(`Spotify Response Data: ${data}`)
                 userResponse.push(data)
               })
               .catch(console.error)
