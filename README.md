@@ -4,7 +4,7 @@ DenOAuth attempts to create middleware that can be utilized in any type of appli
 
 DenOAuth was inspired by js-client-oauth2
 
-# v1.0.4
+# v1.0.5
 Currently DenOAuth supports strategies for LinkedIn, GitHub, Google, and Spotify.
 
 # Three part strategy
@@ -44,7 +44,7 @@ DenOAuth has a three part process for authorization through each specific api.
 
 ```import { Application } from "https://deno.land/x/oak/mod.ts"
 import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { LinkedInClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
+import { LinkedInClient } from 'https://deno.land/x/denoauth@v1.0.5/mod.ts'
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
 
