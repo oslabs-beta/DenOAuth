@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts"
 import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { GitHubClient, LinkedInClient, GoogleClient } from 'https://deno.land/x/denoauth@v1.0.0/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.0/mod.ts'
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
 
@@ -26,6 +26,14 @@ const GoogleObject = new GoogleClient({
     tokenUri: 'https://accounts.google.com/o/oauth2/token',
     redirect: 'http://localhost:3000/auth/google/callback',
     scope: 'https://mail.google.com&access_type=offline&include_granted_scopes=true'
+});
+
+const SpotifyObject = new SpotifyClient({
+    clientId: '<your_clientId>',
+    clientSecret: '<your_clientSecret>',
+    tokenUri: 'https://api.spotify.com/v1/me',
+    redirect: 'http://localhost:3000/auth/spotify/callback',
+    scope: 'user-read-email'
 });
 
 const router = new Router();
@@ -61,6 +69,12 @@ router.get('/google', (ctx) => {
         data: ctx.response.redirect(GoogleObject.code.createLink())
     };
 })
+router.get('/spotify', (ctx) => {
+    ctx.response.body = {
+        message: 'success',
+        data: ctx.response.redirect(SpotifyObject.code.createLink())
+    };
+})
 
 router.get('/auth/github/callback', async (ctx) => {
     // Exchange the authorization code for an access token and exchange token for profile
@@ -89,6 +103,14 @@ router.get('/auth/google/callback', async (ctx) => {
     ctx.response.body = `Hello, this is where your secret page lives`;
 })
 
+router.get('/auth/spotify/callback', async (ctx) => {
+    // Exchange the authorization code for an access token and exchange token for profile
+    const userProfile: any = await SpotifyObject.code.processAuth(ctx.request.url);
+    // userProfile is an object of information given by Spotify. You can destructure the object to grab specific information
+    const { display_name } = userProfile;
+    
+    return (`Hello ${ display_name }`)
+})
 
 
 
