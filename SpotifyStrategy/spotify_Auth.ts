@@ -27,7 +27,7 @@ export class SpotifyStrategy extends SpotifyGrant {
   async processAuth(stringPathName:any) {
    /** Parses the authorization response request tokens from the authorization server. */
     const code:string = JSON.stringify(stringPathName.search);
-    const parsedCode:string = code.slice(code.indexOf('"?code=')+7);
+    const parsedCode:string = code.slice(code.indexOf('"?code=')+7, -1);
     console.log(`parsedCode ${parsedCode}`)
     const userResponse:unknown[] = [];
     
