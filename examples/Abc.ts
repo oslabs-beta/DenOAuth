@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/abc@v1.3.3/mod.ts";
 import { renderFile } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.5/mod.ts'
 
 
 const app = new Application();
