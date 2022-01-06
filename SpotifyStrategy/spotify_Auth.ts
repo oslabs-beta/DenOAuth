@@ -13,12 +13,13 @@ export class SpotifyStrategy extends SpotifyGrant {
     super(client);
   }
 
-  // SampleLink: string = `https://accounts.spotify.com/authorize?client_id={clientId}&scope=user-read-private&response_type=code&redirect_uri={redirect}`
+  // SampleLink: string = `https://accounts.spotify.com/authorize?client_id={clientId}&scope=user-read-private&response_type=code&redirect_uri={redirect}&state=${state}`
 
   // part 1 of DenOAuth strategy
   /** Builds a URI you can redirect a user to to make the authorization request. */
   createLink() {
-    const SampleLink = `https://accounts.spotify.com/authorize?client_id=${this.client.config.clientId}&scope=${this.client.config.scope}&response_type=code&redirect_uri=${this.client.config.redirect}`;
+    const state: number = Math.floor(Math.random() * 1000000000)  
+    const SampleLink = `https://accounts.spotify.com/authorize?client_id=${this.client.config.clientId}&scope=${this.client.config.scope}&response_type=code&redirect_uri=${this.client.config.redirect}&state=${state}`;
     return SampleLink;
   }
 
@@ -27,7 +28,7 @@ export class SpotifyStrategy extends SpotifyGrant {
   async processAuth(stringPathName:any) {
    /** Parses the authorization response request tokens from the authorization server. */
     const code:string = JSON.stringify(stringPathName.search);
-    const parsedCode:string = code.slice(code.indexOf('"?code=')+7, -1);
+    const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state')); 
     console.log(`parsedCode ${parsedCode}`)
     const userResponse:unknown[] = [];
     
