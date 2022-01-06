@@ -112,6 +112,7 @@ We would love to hear your experience and get your feedback on our modules. Feel
 # Developers
 
 Check out our website here :: [DenOAuth.org](https://www.denoauth.org)
+
 Press :: [Medium](https://medium.com/@dannguyen1191/denoauth-solution-deno-oauth-2-0-54d3b6a4ef35) | [Product Hunt](https://www.producthunt.com/posts/denoauth)
 
 Nick Echols :: [LinkedIn](https://www.linkedin.com/in/nickechols87/) | [GitHub](https://github.com/Nechols87)
