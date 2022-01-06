@@ -28,6 +28,7 @@ export class SpotifyStrategy extends SpotifyGrant {
    /** Parses the authorization response request tokens from the authorization server. */
     const code:string = JSON.stringify(stringPathName.search);
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7);
+    console.log(`parsedCode ${parsedCode}`)
     const userResponse:unknown[] = [];
     
    /** Exchange the authorization code for an access token */
@@ -45,10 +46,12 @@ export class SpotifyStrategy extends SpotifyGrant {
       })
     })
     .then((response) => {
+        console.log(`response ${response}`)
       return response.text()
      })
     .then( async (paramsString: any) => {
       const params = new URLSearchParams(paramsString);
+      console.log(`params ${params}`)
         const tokenKey = [];
         for (const [key, value] of params.entries()){
         tokenKey.push(key, value)
@@ -63,7 +66,7 @@ export class SpotifyStrategy extends SpotifyGrant {
           i++
           }
           const bearerToken = await tokenArr.join('');
-
+          console.log(`bearerToken ${bearerToken}`)
           /** Use the access token to make an authenticated API request */
           await fetch("https://api.spotify.com/v1/me", {
                 headers: {
