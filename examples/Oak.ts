@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts"
 import { renderFileToString } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient, DiscordClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
 import { Router } from "https://deno.land/x/oak/mod.ts"
 
 
@@ -36,13 +36,21 @@ const SpotifyObject = new SpotifyClient({
     scope: 'user-read-email'
 });
 
+const DiscordObject = new DiscordClient({
+    clientId: '<your_clientId>',
+    clientSecret: '<your_clientSecret>',
+    tokenUri: 'https://discord.com/api/oauth2/token',
+    redirect: 'http://localhost:3000/auth/discord/callback',
+    scope: 'identify'
+});
+
 const router = new Router();
 
 const port: String|any = 3000
 const app = new Application()
 
-app.use(router.routes())
-app.use(router.allowedMethods())
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 router.get('/login', async (ctx) => {
     ctx.response.body = await renderFileToString(
@@ -54,25 +62,31 @@ router.get('/login', async (ctx) => {
 router.get('/gitHub', (ctx) => {
     ctx.response.body = {
         message: 'success',
-        data: ctx.response.redirect(GitHubObject.code.createLink())
+        data: ctx.response.redirect(GitHubObject.code.createLink());
     };
 })
 router.get('/linkedin', (ctx) => {
     ctx.response.body = {
         message: 'success',
-        data: ctx.response.redirect(LinkedInObject.code.createLink())
+        data: ctx.response.redirect(LinkedInObject.code.createLink());
     };
 })
 router.get('/google', (ctx) => {
     ctx.response.body = {
         message: 'success',
-        data: ctx.response.redirect(GoogleObject.code.createLink())
+        data: ctx.response.redirect(GoogleObject.code.createLink());
     };
 })
 router.get('/spotify', (ctx) => {
     ctx.response.body = {
         message: 'success',
-        data: ctx.response.redirect(SpotifyObject.code.createLink())
+        data: ctx.response.redirect(SpotifyObject.code.createLink());
+    };
+})
+router.get('/discord', (ctx) => {
+    ctx.response.body = {
+        message: 'success',
+        data: ctx.response.redirect(DiscordObject.code.createLink());
     };
 })
 
@@ -112,8 +126,17 @@ router.get('/auth/spotify/callback', async (ctx) => {
     return (`Hello ${ display_name }`)
 })
 
+router.get('/auth/discord/callback', async (ctx) => {
+    // Exchange the authorization code for an access token and exchange token for profile
+    const userProfile: any = await DiscordObject.code.processAuth(ctx.request.url);
+    // userProfile is an object of information given by Discord. You can destructure the object to grab specific information
+    const { username } = userProfile;
+
+    console.log(`Hello ${ username }`);
+})
 
 
-console.log(`Server running on port ${port}`)
 
-await app.listen({port: +port})
+console.log(`Server running on port ${port}`);
+
+await app.listen({port: +port});

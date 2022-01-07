@@ -1,4 +1,4 @@
-import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient, DiscordClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
 import pogo from 'https://deno.land/x/pogo/main.ts';
 
 const server = pogo.server({ port : 3000 });
@@ -36,6 +36,14 @@ const SpotifyObject = new SpotifyClient({
     scope: 'user-read-email'
 });
 
+const DiscordObject = new DiscordClient({
+    clientId: '<your_clientId>',
+    clientSecret: '<your_clientSecret>',
+    tokenUri: 'https://discord.com/api/oauth2/token',
+    redirect: 'http://localhost:3000/auth/discord/callback',
+    scope: 'identify'
+});
+
 
 server.router.get('/login', async (request, h) => {
     const buffer = await Deno.readFile('./login.html');
@@ -56,6 +64,10 @@ server.router.get('/google', (request, h) => {
 
 server.router.get('/spotify', (request, h) => {
    return h.redirect(SpotifyObject.code.createLink())
+})
+
+server.router.get('/discord', (request, h) => {
+   return h.redirect(DiscordObject.code.createLink())
 })
 
 server.router.get('/auth/github/callback', async (request, h) => {
@@ -92,6 +104,15 @@ server.router.get('/auth/spotify/callback', async (request, h) => {
     const { display_name } = userProfile;
     
     return (`Hello ${ display_name }`)
+})
+
+server.router.get('/auth/discord/callback', async (request, h) => {
+    // Exchange the authorization code for an access token and exchange token for profile
+    const userProfile: any = await SpotifyObject.code.processAuth(request.url);
+    // userProfile is an object of information given by Discord. You can destructure the object to grab specific information
+    const { username } = userProfile;
+
+    console.log(`Hello ${ username }`);
 })
 
 server.router.get('/', () => {

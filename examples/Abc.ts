@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/abc@v1.3.3/mod.ts";
 import { renderFile } from "https://deno.land/x/dejs@0.10.2/mod.ts";
-import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
+import { GitHubClient, LinkedInClient, GoogleClient, SpotifyClient, DiscordClient } from 'https://deno.land/x/denoauth@v1.0.4/mod.ts'
 
 
 const app = new Application();
@@ -38,6 +38,14 @@ const SpotifyObject = new SpotifyClient({
     scope: 'user-read-email'
 });
 
+const DiscordObject = new DiscordClient({
+    clientId: '<your_clientId>',
+    clientSecret: '<your_clientSecret>',
+    tokenUri: 'https://discord.com/api/oauth2/token',
+    redirect: 'http://localhost:3000/auth/discord/callback',
+    scope: 'identify'
+});
+
 
 app.static("/views", "./views/login.html");
 
@@ -49,25 +57,29 @@ app.renderer = {
   };
 
 app.get('/login', async (c) => {
-    await c.render('./login.html')
+    await c.render('./login.html');
 })
 .start({ port: 3000 });
 
 
 app.get('/gitHub', (c) => {
-    c.redirect(GitHubObject.code.createLink())
+    c.redirect(GitHubObject.code.createLink());
 })
 
 app.get('/linkedin', (c) => {
-    c.redirect(LinkedInObject.code.createLink())
+    c.redirect(LinkedInObject.code.createLink());
 })
   
 app.get('/google', (c) => {
-    c.redirect(GoogleObject.code.createLink())
+    c.redirect(GoogleObject.code.createLink());
 })
 
 app.get('/spotify', (c) => {
-    c.redirect(SpotifyObject.code.createLink())
+    c.redirect(SpotifyObject.code.createLink());
+})
+
+app.get('/discord', (c) => {
+    c.redirect(DiscordObject.code.createLink());
 })
 
 app.get('/auth/github/callback', async (c) => {
@@ -101,9 +113,18 @@ app.get('/auth/spotify/callback', async (c) => {
     // Exchange the authorization code for an access token and exchange token for profile
     const userProfile: any = await SpotifyObject.code.processAuth(c.url);
     // userProfile is an object of information given by Spotify. You can destructure the object to grab specific information
-    const { display_name } = userProfile
+    const { display_name } = userProfile;
     
-    return (`Hello ${ display_name }`)
+    return (`Hello ${ display_name }`);
+})
+
+app.get('/auth/discord/callback', async (c) => {
+    // Exchange the authorization code for an access token and exchange token for profile
+    const userProfile: any = await DiscordObject.code.processAuth(c.url);
+    // userProfile is an object of information given by Discord. You can destructure the object to grab specific information
+    const { username } = userProfile;
+
+    console.log(`Hello ${ username }`);
 })
 
 console.log("http://localhost:3000/");
