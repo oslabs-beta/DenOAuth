@@ -5,7 +5,7 @@ DenOAuth attempts to create middleware that can be utilized in any type of appli
 
 DenOAuth was inspired by js-client-oauth2
 
-# v1.0.5
+# v1.0.6
 
 
 Currently DenOAuth supports strategies for LinkedIn, GitHub, Google, Spotify, and Discord.
