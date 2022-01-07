@@ -31,9 +31,7 @@ export class DiscordStrategy extends DiscordGrant {
   async processAuth(stringPathName:any) {
    /** Parses the authorization response request tokens from the authorization server. */
     const code: string = JSON.stringify(stringPathName.search) 
-    console.log(`code ${code}`)
     const parsedCode:string = code.slice(code.indexOf('"?code=')+7, code.indexOf('&state'))
-    console.log(`parsedCode ${parsedCode}`)
     const userResponse:unknown[] = [];
     
    /** Exchange the authorization code for an access token */
@@ -56,16 +54,13 @@ export class DiscordStrategy extends DiscordGrant {
       })
       .then( async (paramsString: any) => {
         const params = new URLSearchParams(paramsString)
-        console.log(params);
         const tokenKey = [];
     
         for (const [key, value] of params.entries()){
           tokenKey.push(key, value)
         }
-        console.log(tokenKey[0])
         const obj: any = tokenKey[0]
         const values: unknown[] = Object.values(obj)
-        console.log(values)
     
         const tokenArr: unknown[] = []
         let i = 18;
