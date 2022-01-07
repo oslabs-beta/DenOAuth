@@ -46,7 +46,7 @@ export class DiscordStrategy extends DiscordGrant {
           'grant_type': "authorization_code",
           'code': parsedCode,
           'redirect_uri': this.client.config.redirect,
-          'client_id': this.client.config.redirect,
+          'client_id': this.client.config.clientId,
           'client_secret': this.client.config.clientSecret
         })
       })
