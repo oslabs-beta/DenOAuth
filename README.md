@@ -7,6 +7,7 @@ DenOAuth was inspired by js-client-oauth2
 
 # v1.0.5
 
+
 Currently DenOAuth supports strategies for LinkedIn, GitHub, Google, Spotify, and Discord.
 
 # Three part strategy
